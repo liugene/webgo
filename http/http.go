@@ -1,15 +1,25 @@
 package http
 
-import "net/http"
+import (
+	"net/http"
+	"github.com/liugene/webgo/router"
+)
 
-type FastHttp struct {
-}
+type FastHttp struct {}
 
-func ServeHttp(w http.ResponseWriter, r http.Request) {
-
+func (*FastHttp) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	route := router.Router{Path:r.URL.String()}
+	route.Parser().Dispatch()
+	req := Request{
+		Path:r.URL.String(),
+		Method:r.Method,
+		Host:r.Host,
+	}
+	req.start()
 }
 
 func (ft *FastHttp) Listen(port string) {
-	http.ListenAndServe(":"+port, nil)
+	mux := &FastHttp{}
+	http.ListenAndServe(":"+port, mux)
 }
 

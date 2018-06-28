@@ -1,6 +1,10 @@
 package http
 
-type response struct {
+import (
+	"net/http"
+)
 
+type Response struct {
+	Writer http.ResponseWriter
 }
 

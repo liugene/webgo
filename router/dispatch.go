@@ -1,8 +1,14 @@
 package router
 
-type Dispatch struct {
+import (
+	"application/http/controller"
+)
+
+type dispatch struct {
+	router *Router
 }
 
-func H() {
-
+func (d *dispatch) dispatch() {
+	pack := controller.Home{}
+	pack.Index()
 }
